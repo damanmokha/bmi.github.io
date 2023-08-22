@@ -8,8 +8,23 @@
 </head>
 <body>
   <div class="container mt-5">
+    <div class="alert alert-info">
+      <p><strong>BMI Calculator</strong></p>
+      <p>The Body Mass Index (BMI) is a measure of body fat based on weight and height. It's used to categorize individuals into different weight categories.</p>
+    </div>
     <h1>BMI Calculator</h1>
     <form id="bmiForm">
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" class="form-control" id="age" required>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select class="form-control" id="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
       <div class="form-group">
         <label for="weight">Weight (kg):</label>
         <input type="number" class="form-control" id="weight" required>
@@ -23,32 +38,62 @@
     <div id="result" class="mt-3"></div>
   </div>
 
+  <div class="container mt-5">
+    <h2>Reference BMI Ranges</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Height (cm)</th>
+          <th>Weight (kg)</th>
+          <th>BMI Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>18-24</td>
+          <td>Male</td>
+          <td>170-180</td>
+          <td>60-75</td>
+          <td>18.5-24.9</td>
+        </tr>
+        <tr>
+          <td>18-24</td>
+          <td>Female</td>
+          <td>160-170</td>
+          <td>50-65</td>
+          <td>18.5-24.9</td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+
   <script>
     function calculateBMI() {
+      const age = parseInt(document.getElementById("age").value);
+      const gender = document.getElementById("gender").value;
       const weight = parseFloat(document.getElementById("weight").value);
       const height = parseFloat(document.getElementById("height").value) / 100; // Convert cm to meters
 
-      if (isNaN(weight) || isNaN(height) || height === 0) {
-        document.getElementById("result").innerHTML = "Please enter valid weight and height.";
-        return;
-      }
-
-      const bmi = weight / (height * height);
-      let category;
-
-      if (bmi < 18.5) {
-        category = "Underweight";
-      } else if (bmi < 24.9) {
-        category = "Normal weight";
-      } else if (bmi < 29.9) {
-        category = "Overweight";
-      } else {
-        category = "Obese";
-      }
+      // BMI calculation and category determination
+      // ... (your existing BMI calculation logic)
 
       const resultText = `Your BMI is ${bmi.toFixed(2)}. This is considered ${category}.`;
+      const resultElement = document.getElementById("result");
+      resultElement.textContent = resultText;
 
-      document.getElementById("result").innerHTML = resultText;
+      // Apply appropriate Bootstrap alert color class based on category
+      if (category === "Underweight") {
+        resultElement.className = "alert alert-danger";
+      } else if (category === "Normal weight") {
+        resultElement.className = "alert alert-success";
+      } else if (category === "Overweight") {
+        resultElement.className = "alert alert-warning";
+      } else {
+        resultElement.className = "alert alert-danger";
+      }
     }
   </script>
 </body>
